@@ -1,11 +1,20 @@
 import React, { useEffect, useState } from "react";
+import { FaGithub } from "react-icons/fa";
 import { Map, Filters } from "./components";
 import { fetchApi } from "./services/fetchApi";
 
 import "./App.scss";
+import { mockData } from "./dataMock";
 
 function App() {
+  const [filters, setFilters] = useState({
+    avaliable: false,
+    minPercentage: 20,
+  });
+  const [data, setData] = useState(null);
   const [vehicles, setVehicles] = useState(null);
+  const [parkings, setParkings] = useState(null);
+  const [poi, setPoi] = useState(null);
   const [loading, setLoading] = useState(true);
   const [fetchError, setFetchError] = useState("");
 
@@ -14,7 +23,11 @@ function App() {
   useEffect(() => {
     fetchApi(urlVehicles)
       .then((results) => {
-        setVehicles(Object.values(results.objects));
+        if (mockData) {
+          setData(Object.values(results.objects).concat(mockData));
+        } else {
+          setData(Object.values(results.objects));
+        }
         setLoading(false);
       })
       .catch((err) => {
@@ -22,22 +35,49 @@ function App() {
       });
   }, []);
 
+  useEffect(() => {}, [data]);
+
   if (!fetchError) {
     if (!loading) {
       return (
         <>
-          <header>
-            <h1>Hello World!</h1>
+          <header className="app__header">
+            <h1 className="app__header--title">Map position vizualization</h1>
+            <span className="app__header--description">
+              <p>
+                Check position of vehicles, parking and POI on this interactive
+                map!
+              </p>
+              <p>
+                You can also use filters to specify the appropriate search
+                options.
+              </p>
+            </span>
           </header>
-          <main>
-            <Filters />
-            {vehicles.length ? (
-              <Map vehicles={vehicles} />
-            ) : (
-              <p>Nie ma wyników odpowiadających kryteriom wyszukiwania</p>
-            )}
+
+          <main className="app__main">
+            <section className="filters__container">
+              <Filters />
+            </section>
+            <section className="map__container">
+              {data.length ? (
+                <Map vehicles={data} />
+              ) : (
+                <p>Nie ma wyników odpowiadających kryteriom wyszukiwania.</p>
+              )}
+            </section>
           </main>
-          <footer>copy</footer>
+
+          <footer className="app__footer">
+            <a
+              className="app__footer--link"
+              href="https://github.com/wszczawinski/map-position"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaGithub /> Repo Link
+            </a>
+          </footer>
         </>
       );
     } else {

@@ -14,20 +14,20 @@ export const Pin = ({ vehicleData }) => {
   } = vehicleData;
 
   return (
-    <div>
+    <article>
       <Marker position={[location.latitude, location.longitude]}>
         <Popup>
           <>
-            <h4>Name: {name}</h4>
-            <h5>Status: {status}</h5>
-            <p>Battery: {batteryLevelPct}%</p>
-            <p>Range: {rangeKm}km</p>
-            <p>Type: {type}</p>
-            <p>Plater: {platesNumber}</p>
-            <p>Number: {sideNumber}</p>
+            <h3>Name: {name}</h3>
+            {status && <h5>Status: {status}</h5>}
+            {batteryLevelPct && <p>Battery: {batteryLevelPct}%</p>}
+            {rangeKm && <p>Range: {rangeKm}km</p>}
+            {type && <p>Type: {type}</p>}
+            {platesNumber && <p>Plater: {platesNumber}</p>}
+            {sideNumber && <p>Number: {sideNumber}</p>}
           </>
         </Popup>
       </Marker>
-    </div>
+    </article>
   );
 };
