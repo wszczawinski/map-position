@@ -1,0 +1,71 @@
+@import "../../index.scss";
+
+.filter__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  &--btn {
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    transition: all 0.2s ease-in-out;
+    font-size: $font-size-mobile;
+    outline: none;
+    &:hover {
+      border: 2px solid #21be0c;
+      cursor: pointer;
+    }
+
+    @media (min-width: $break-point-large) {
+      font-size: $font-size-desktop;
+    }
+  }
+
+  &--btn .active {
+    border: 2px solid #21be0c;
+  }
+
+  &--filters {
+    display: flex;
+    flex-direction: row;
+    opacity: 0;
+    margin-left: 20px;
+    animation: 0.2s slidefade 0.2s forwards;
+
+    span {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      align-items: center;
+      justify-content: space-between;
+      border: 2px solid black;
+      border-radius: 5px;
+      padding: 5px;
+      font-size: $font-size-mobile - 2px;
+
+      @media (min-width: $break-point-large) {
+        font-size: $font-size-desktop;
+        flex-direction: row;
+      }
+    }
+
+    @media (min-width: $break-point-large) {
+      padding-left: 5vw;
+      gap: 20px;
+
+      .range {
+        min-width: 320px;
+      }
+    }
+  }
+
+  @keyframes slidefade {
+    100% {
+      opacity: 1;
+      margin: 0;
+    }
+  }
+}
