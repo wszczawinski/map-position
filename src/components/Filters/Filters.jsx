@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./Filters.scss";
 
-export const Filters = () => {
+export const Filters = ({
+  availability,
+  setAvailability,
+  minBattery,
+  setMinBattery,
+}) => {
   const [filtersVisibitity, setFiltersVisibitity] = useState(false);
-  const [avaliable, setAvaliable] = useState(false);
-  const [batteryLevel, setBatteryLevel] = useState(20);
+
   const showFilters = () => {
     setFiltersVisibitity(!filtersVisibitity);
   };
-
-  useEffect(() => {
-    console.log(avaliable);
-    console.log(batteryLevel);
-  }, [batteryLevel, avaliable]);
 
   return (
     <section className="filter__container">
@@ -29,18 +28,18 @@ export const Filters = () => {
             <input
               name="avaliability"
               type="checkbox"
-              checked={avaliable}
-              onChange={() => setAvaliable(!avaliable)}
+              checked={availability}
+              onChange={() => setAvailability(!availability)}
             />
           </span>
 
           <span className="range">
-            Minimum battery {batteryLevel}%
+            Minimum battery {minBattery}%
             <input
               name="battery"
               type="range"
-              defaultValue={batteryLevel}
-              onChange={(e) => setBatteryLevel(e.target.value)}
+              defaultValue={minBattery}
+              onChange={(e) => setMinBattery(e.target.value)}
             />
           </span>
         </div>

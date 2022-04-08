@@ -4,16 +4,16 @@ import { Pin } from "../";
 
 import "./Map.scss";
 
-export const Map = ({ vehicles }) => {
+export const Map = ({ mapObjects }) => {
   const initialLatitude =
-    vehicles?.reduce((a, b) => {
+    mapObjects?.reduce((a, b) => {
       return a + b?.location.latitude;
-    }, 0) / vehicles.length;
+    }, 0) / mapObjects.length;
 
   const initialLongitude =
-    vehicles?.reduce((a, b) => {
+    mapObjects?.reduce((a, b) => {
       return a + b?.location.longitude;
-    }, 0) / vehicles.length;
+    }, 0) / mapObjects.length;
 
   const initialPosition = [initialLatitude, initialLongitude];
 
@@ -21,7 +21,7 @@ export const Map = ({ vehicles }) => {
     <>
       <MapContainer
         center={initialPosition}
-        zoom={17}
+        zoom={16}
         className="leaflet__container"
       >
         <TileLayer
@@ -29,8 +29,8 @@ export const Map = ({ vehicles }) => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        {vehicles?.map((vehicle) => (
-          <Pin vehicleData={vehicle} key={vehicle.id} />
+        {mapObjects?.map((mapObject) => (
+          <Pin objectData={mapObject} key={mapObject.id} />
         ))}
       </MapContainer>
     </>

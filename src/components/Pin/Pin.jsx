@@ -1,8 +1,13 @@
 import React from "react";
 import { Marker, Popup } from "react-leaflet";
 
-export const Pin = ({ vehicleData }) => {
+import "./Pin.scss";
+
+export const Pin = ({ objectData }) => {
   const {
+    discriminator,
+    spots,
+    freeSpots,
     batteryLevelPct,
     name,
     platesNumber,
@@ -11,7 +16,7 @@ export const Pin = ({ vehicleData }) => {
     status,
     location,
     type,
-  } = vehicleData;
+  } = objectData;
 
   return (
     <article>
@@ -19,7 +24,12 @@ export const Pin = ({ vehicleData }) => {
         <Popup>
           <>
             <h3>Name: {name}</h3>
-            {status && <h5>Status: {status}</h5>}
+            {status && <p>Status: {status}</p>}
+            {spots && (
+              <p>
+                Free spots: {freeSpots}/{spots}
+              </p>
+            )}
             {batteryLevelPct && <p>Battery: {batteryLevelPct}%</p>}
             {rangeKm && <p>Range: {rangeKm}km</p>}
             {type && <p>Type: {type}</p>}

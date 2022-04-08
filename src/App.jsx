@@ -4,17 +4,14 @@ import { Map, Filters } from "./components";
 import { fetchApi } from "./services/fetchApi";
 
 import "./App.scss";
-import { mockData } from "./dataMock";
+import { mockData } from "./constants/dataMock";
 
 function App() {
-  const [filters, setFilters] = useState({
-    avaliable: false,
-    minPercentage: 20,
-  });
+  const [availability, setAvailability] = useState(false);
+  const [minBattery, setMinBattery] = useState(20);
   const [data, setData] = useState(null);
-  const [vehicles, setVehicles] = useState(null);
-  const [parkings, setParkings] = useState(null);
-  const [poi, setPoi] = useState(null);
+  const [filteredData, setFilteredData] = useState(null);
+
   const [loading, setLoading] = useState(true);
   const [fetchError, setFetchError] = useState("");
 
@@ -35,7 +32,23 @@ function App() {
       });
   }, []);
 
-  useEffect(() => {}, [data]);
+  useEffect(() => {
+    if (data) {
+      let filteredData = [];
+      availability
+        ? (filteredData = data?.filter(
+            (object) => object.status === "AVAILABLE"
+          ))
+        : (filteredData = data);
+
+      setFilteredData(
+        filteredData.filter(
+          (object) =>
+            !object.batteryLevelPct || object.batteryLevelPct >= minBattery
+        )
+      );
+    }
+  }, [data, minBattery, availability]);
 
   if (!fetchError) {
     if (!loading) {
@@ -57,11 +70,16 @@ function App() {
 
           <main className="app__main">
             <section className="filters__container">
-              <Filters />
+              <Filters
+                availability={availability}
+                setAvailability={setAvailability}
+                minBattery={minBattery}
+                setMinBattery={setMinBattery}
+              />
             </section>
             <section className="map__container">
               {data.length ? (
-                <Map vehicles={data} />
+                <Map mapObjects={filteredData} />
               ) : (
                 <p>Nie ma wyników odpowiadających kryteriom wyszukiwania.</p>
               )}
