@@ -2,6 +2,8 @@ import React from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
 import { Pin } from "../";
 
+import "./Map.scss";
+
 export const Map = ({ vehicles }) => {
   const initialLatitude =
     vehicles?.reduce((a, b) => {
@@ -16,10 +18,10 @@ export const Map = ({ vehicles }) => {
   const initialPosition = [initialLatitude, initialLongitude];
 
   return (
-    <div>
+    <>
       <MapContainer
         center={initialPosition}
-        zoom={13}
+        zoom={17}
         className="leaflet__container"
       >
         <TileLayer
@@ -31,6 +33,6 @@ export const Map = ({ vehicles }) => {
           <Pin vehicleData={vehicle} key={vehicle.id} />
         ))}
       </MapContainer>
-    </div>
+    </>
   );
 };
