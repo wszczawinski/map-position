@@ -24,14 +24,26 @@ export const Pin = ({ objectData }) => {
         <Popup>
           <>
             <h3>Name: {name}</h3>
-            {status && <p>Status: {status}</p>}
-            {spots && (
+            {status && (
               <p>
-                Free spots: {freeSpots}/{spots}
+                <b>Status: </b> {status}
               </p>
             )}
-            {batteryLevelPct && <p>Battery: {batteryLevelPct}%</p>}
-            {rangeKm && <p>Range: {rangeKm}km</p>}
+            {spots && (
+              <p>
+                <b>Free spots: </b> {freeSpots}/{spots}
+              </p>
+            )}
+            {batteryLevelPct && (
+              <p>
+                <b>Battery: </b> {batteryLevelPct}%
+              </p>
+            )}
+            {rangeKm && (
+              <p>
+                <b>Range: </b> {rangeKm}km
+              </p>
+            )}
             {type && <p>Type: {type}</p>}
             {platesNumber && <p>Plater: {platesNumber}</p>}
             {sideNumber && <p>Number: {sideNumber}</p>}

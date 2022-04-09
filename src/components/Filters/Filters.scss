@@ -14,12 +14,15 @@
     transition: all 0.2s ease-in-out;
     font-size: $font-size-mobile;
     outline: none;
+    width: 90px;
+
     &:hover {
       border: 2px solid #21be0c;
       cursor: pointer;
     }
 
     @media (min-width: $break-point-large) {
+      width: 110px;
       font-size: $font-size-desktop;
     }
   }
@@ -31,6 +34,7 @@
   &--filters {
     display: flex;
     flex-direction: row;
+    gap: 10px;
     opacity: 0;
     margin-left: 20px;
     animation: 0.2s slidefade 0.2s forwards;

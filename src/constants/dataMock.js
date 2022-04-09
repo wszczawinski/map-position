@@ -27,7 +27,7 @@ export const mockData = [
     name: "Enigma Python Van II",
     description: null,
     location: {
-      latitude: 52.1931,
+      latitude: 52.1946,
       longitude: 20.9305,
     },
     metadata: null,
@@ -60,8 +60,8 @@ export const mockData = [
     name: "Nissan Leaf White II",
     description: null,
     location: {
-      latitude: 52.193,
-      longitude: 20.93,
+      latitude: 52.1945,
+      longitude: 20.928,
     },
     metadata: null,
   },
@@ -93,8 +93,8 @@ export const mockData = [
     name: "Enigma Python Car II",
     description: null,
     location: {
-      latitude: 52.1941,
-      longitude: 20.9306,
+      latitude: 52.194,
+      longitude: 20.9297,
     },
     metadata: null,
   },
@@ -114,8 +114,8 @@ export const mockData = [
     name: "Enigma Parking I",
     description: null,
     location: {
-      latitude: 52.194,
-      longitude: 20.9315,
+      latitude: 52.1943,
+      longitude: 20.931,
     },
     metadata: null,
   },
@@ -136,7 +136,7 @@ export const mockData = [
     description: null,
     location: {
       latitude: 52.19488,
-      longitude: 20.9346,
+      longitude: 20.9285,
     },
     metadata: null,
   },
@@ -155,7 +155,7 @@ export const mockData = [
     description: null,
     location: {
       latitude: 52.19381,
-      longitude: 20.9309,
+      longitude: 20.9293,
     },
     metadata: null,
   },
@@ -173,8 +173,8 @@ export const mockData = [
     name: "Enigma POI II",
     description: null,
     location: {
-      latitude: 52.19411,
-      longitude: 20.9349,
+      latitude: 52.1937,
+      longitude: 20.928,
     },
     metadata: null,
   },

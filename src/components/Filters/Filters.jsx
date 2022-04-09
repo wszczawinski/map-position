@@ -19,12 +19,13 @@ export const Filters = ({
         className={`filter__container--btn ${filtersVisibitity && "active"}`}
         onClick={showFilters}
       >
-        Show filters
+        {!filtersVisibitity ? "Show filters" : "Hide filters"}
       </button>
+      
       {filtersVisibitity ? (
         <div className="filter__container--filters">
           <span>
-            Only avaliable
+            Only available
             <input
               name="avaliability"
               type="checkbox"

@@ -28,7 +28,8 @@ function App() {
         setLoading(false);
       })
       .catch((err) => {
-        setFetchError(err.message);
+        //setFetchError(err.message); when backend returns proper error messages
+        setFetchError("Failed to fetch data. Please try again.");
       });
   }, []);
 
@@ -50,59 +51,59 @@ function App() {
     }
   }, [data, minBattery, availability]);
 
-  if (!fetchError) {
-    if (!loading) {
-      return (
-        <>
-          <header className="app__header">
-            <h1 className="app__header--title">Map position vizualization</h1>
-            <span className="app__header--description">
-              <p>
-                Check position of vehicles, parking and POI on this interactive
-                map!
-              </p>
-              <p>
-                You can also use filters to specify the appropriate search
-                options.
-              </p>
-            </span>
-          </header>
+  if (fetchError) {
+    return <div className="App">Fetch error message: {fetchError}</div>;
+  }
 
-          <main className="app__main">
-            <section className="filters__container">
-              <Filters
-                availability={availability}
-                setAvailability={setAvailability}
-                minBattery={minBattery}
-                setMinBattery={setMinBattery}
-              />
-            </section>
-            <section className="map__container">
-              {data.length ? (
-                <Map mapObjects={filteredData} />
-              ) : (
-                <p>Nie ma wyników odpowiadających kryteriom wyszukiwania.</p>
-              )}
-            </section>
-          </main>
+  if (!loading) {
+    return (
+      <>
+        <header className="app__header">
+          <h1 className="app__header--title">Map position vizualization</h1>
+          <span className="app__header--description">
+            <p>
+              Check position of vehicles, parking and POI on this interactive
+              map!
+            </p>
+            <p>
+              You can also use filters to specify the appropriate search
+              options.
+            </p>
+          </span>
+        </header>
 
-          <footer className="app__footer">
-            <a
-              className="app__footer--link"
-              href="https://github.com/wszczawinski/map-position"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FaGithub /> Repo Link
-            </a>
-          </footer>
-        </>
-      );
-    } else {
-      return <div className="App">Loading content...</div>;
-    }
+        <main className="app__main">
+          <section className="filters__container">
+            <Filters
+              availability={availability}
+              setAvailability={setAvailability}
+              minBattery={minBattery}
+              setMinBattery={setMinBattery}
+            />
+          </section>
+          <section className="map__container">
+            {filteredData.length ? (
+              <Map mapObjects={filteredData} />
+            ) : (
+              <p>There are no results for these search criteria.</p>
+            )}
+          </section>
+        </main>
+
+        <footer className="app__footer">
+          <a
+            className="app__footer--link"
+            href="https://github.com/wszczawinski/map-position"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaGithub /> Repo Link
+          </a>
+        </footer>
+      </>
+    );
   } else {
-    return <div className="App">Fetch error message: '{fetchError}'</div>;
+    return <div className="App">Loading content...</div>;
   }
 }
 
