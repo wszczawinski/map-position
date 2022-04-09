@@ -1,5 +1,6 @@
 import React from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
+import MarkerClusterGroup from "react-leaflet-markercluster";
 import { Pin } from "../";
 
 import "./Map.scss";
@@ -21,7 +22,7 @@ export const Map = ({ mapObjects }) => {
     <>
       <MapContainer
         center={initialPosition}
-        zoom={16}
+        zoom={17}
         className="leaflet__container"
       >
         <TileLayer
@@ -29,9 +30,14 @@ export const Map = ({ mapObjects }) => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        {mapObjects?.map((mapObject) => (
-          <Pin objectData={mapObject} key={mapObject.id} />
-        ))}
+        <MarkerClusterGroup
+          showCoverageOnHover={true}
+          disableClusteringAtZoom={17}
+        >
+          {mapObjects?.map((mapObject) => (
+            <Pin objectData={mapObject} key={mapObject.id} />
+          ))}
+        </MarkerClusterGroup>
       </MapContainer>
     </>
   );

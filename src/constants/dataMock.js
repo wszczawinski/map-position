@@ -141,6 +141,27 @@ export const mockData = [
     metadata: null,
   },
   {
+    discriminator: "parking",
+    status: "UNAVAILABLE",
+    locationDescription: null,
+    address: null,
+    mapColor: {
+      rgb: "ffffff",
+      alpha: 0.5,
+    },
+    spots: 8,
+    freeSpots: 2,
+    promotion: null,
+    id: "00000000-0000-0000-0005-0000000000015",
+    name: "Enigma Parking III",
+    description: null,
+    location: {
+      latitude: 52.193,
+      longitude: 20.9288,
+    },
+    metadata: null,
+  },
+  {
     discriminator: "poi",
     status: "AVAILABLE",
     locationDescription: null,
