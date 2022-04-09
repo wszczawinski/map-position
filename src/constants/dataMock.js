@@ -149,7 +149,7 @@ export const mockData = [
       rgb: "ffffff",
       alpha: 0.5,
     },
-    spots: 8,
+    spots: 2,
     freeSpots: 2,
     promotion: null,
     id: "00000000-0000-0000-0005-0000000000015",

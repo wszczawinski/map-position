@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Marker, Popup } from "react-leaflet";
 import L from "leaflet";
+import { fetchApi } from "../../services/fetchApi";
 
-import car from "../../images/car_icon.svg";
-import un_car from "../../images/un_car_icon.svg";
-import parking from "../../images/parking_icon.svg";
-import un_parking from "../../images/un_parking_icon.svg";
-import poi from "../../images/poi_icon.svg";
-import un_poi from "../../images/un_poi_icon.svg";
+import car_icon from "../../images/car_icon.svg";
+import un_car_icon from "../../images/un_car_icon.svg";
+import parking_icon from "../../images/parking_icon.svg";
+import un_parking_icon from "../../images/un_parking_icon.svg";
+import poi_icon from "../../images/poi_icon.svg";
+import un_poi_icon from "../../images/un_poi_icon.svg";
 import default_icon from "../../images/default_icon.svg";
 
 import "./Pin.scss";
@@ -25,6 +26,7 @@ export const objectIcon = (icon) => {
 
 export const Pin = ({ objectData }) => {
   const [iconType, setIconType] = useState(objectIcon(default_icon));
+  const [fetchObjectData, setFetchObjectData] = useState(null);
 
   const {
     discriminator,
@@ -32,6 +34,7 @@ export const Pin = ({ objectData }) => {
     freeSpots,
     batteryLevelPct,
     name,
+    id,
     platesNumber,
     sideNumber,
     rangeKm,
@@ -43,18 +46,27 @@ export const Pin = ({ objectData }) => {
   useEffect(() => {
     if (discriminator === "vehicle") {
       status === "AVAILABLE"
-        ? setIconType(objectIcon(car))
-        : setIconType(objectIcon(un_car));
+        ? setIconType(objectIcon(car_icon))
+        : setIconType(objectIcon(un_car_icon));
     } else if (discriminator === "poi") {
       status === "AVAILABLE"
-        ? setIconType(objectIcon(poi))
-        : setIconType(objectIcon(un_poi));
+        ? setIconType(objectIcon(poi_icon))
+        : setIconType(objectIcon(un_poi_icon));
     } else if (discriminator === "parking") {
       status === "AVAILABLE"
-        ? setIconType(objectIcon(parking))
-        : setIconType(objectIcon(un_parking));
+        ? setIconType(objectIcon(parking_icon))
+        : setIconType(objectIcon(un_parking_icon));
     }
-  }, [discriminator, status]);
+
+    const objectUrl = `/${discriminator}s/${id}`;
+    fetchApi(objectUrl)
+      .then((results) => {
+        setFetchObjectData(results);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [discriminator, status, id]);
 
   return (
     <article>
@@ -75,10 +87,29 @@ export const Pin = ({ objectData }) => {
                 <b>Free spots: </b> {freeSpots}/{spots}
               </p>
             )}
-            {batteryLevelPct && (
+            {/* display only few properties from single object api, based on lack of most ids */}
+            {fetchObjectData?.picture && (
+              <img
+                src={`https://android.jrotor.com/api/attachments/${fetchObjectData.picture.id}`}
+                alt="name"
+              />
+            )}
+            {fetchObjectData?.driverLicenceCategory && (
               <p>
-                <b>Battery: </b> {batteryLevelPct}%
+                <b>Driving licens category: </b>
+                {fetchObjectData.driverLicenceCategory}
               </p>
+            )}
+            {fetchObjectData?.batteryLevelPct ? (
+              <p>
+                <b>Battery: </b> {fetchObjectData.batteryLevelPct}%
+              </p>
+            ) : (
+              batteryLevelPct && (
+                <p>
+                  <b>Battery: </b> {batteryLevelPct}%
+                </p>
+              )
             )}
             {rangeKm && (
               <p>
