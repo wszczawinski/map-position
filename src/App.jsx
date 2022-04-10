@@ -20,11 +20,20 @@ function App() {
   useEffect(() => {
     fetchApi(urlVehicles)
       .then((results) => {
-        if (mockData) {
-          setData(Object.values(results.objects).concat(mockData));
-        } else {
-          setData(Object.values(results.objects));
-        }
+        setData(
+          mockData
+            ? Object.values(results.objects)
+                .concat(mockData)
+                .filter(
+                  (object) =>
+                    object.location.longitude && object.location.latitude
+                )
+            : Object.values(results.objects).filter(
+                (object) =>
+                  object.location.longitude && object.location.latitude
+              )
+        );
+
         setLoading(false);
       })
       .catch((err) => {
