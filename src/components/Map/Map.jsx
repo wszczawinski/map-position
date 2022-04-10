@@ -2,20 +2,13 @@ import React from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import { Pin } from "../";
+import { calculateAvgPosition } from "../../helpers/calculateAvgPosition";
 
 import "./Map.scss";
 
-export const calculateAvarage = (mapObjects, direction) => {
-  return (
-    mapObjects?.reduce((a, b) => {
-      return a + b?.location[`${direction}`];
-    }, 0) / mapObjects.length
-  );
-};
-
 export const Map = ({ mapObjects }) => {
-  const initialLatitude = calculateAvarage(mapObjects, "latitude");
-  const initialLongitude = calculateAvarage(mapObjects, "longitude");
+  const initialLatitude = calculateAvgPosition(mapObjects, "latitude");
+  const initialLongitude = calculateAvgPosition(mapObjects, "longitude");
   const initialPosition = [initialLatitude, initialLongitude];
 
   return (
