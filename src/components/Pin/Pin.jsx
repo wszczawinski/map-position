@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import { fetchApi } from "../../services/fetchApi";
+import { PopupInfo } from "./PopupInfo";
 
 import car_icon from "../../images/car_icon.svg";
 import un_car_icon from "../../images/un_car_icon.svg";
@@ -18,30 +19,16 @@ export const objectIcon = (icon) => {
     iconUrl: icon,
     iconRetinaUrl: icon,
     iconAnchor: [15, 35],
-    popupAnchor: [12, -25],
+    popupAnchor: [5, -30],
     iconSize: (20, 35),
     className: "leaflet-div-icon",
   });
 };
 
 export const Pin = ({ objectData }) => {
+  const { discriminator, id, status, location } = objectData;
   const [iconType, setIconType] = useState(objectIcon(default_icon));
   const [fetchObjectData, setFetchObjectData] = useState(null);
-
-  const {
-    discriminator,
-    spots,
-    freeSpots,
-    batteryLevelPct,
-    name,
-    id,
-    platesNumber,
-    sideNumber,
-    rangeKm,
-    status,
-    location,
-    type,
-  } = objectData;
 
   useEffect(() => {
     if (discriminator === "vehicle") {
@@ -64,7 +51,7 @@ export const Pin = ({ objectData }) => {
         setFetchObjectData(results);
       })
       .catch((err) => {
-        console.log(err);
+        console.warn(err);
       });
   }, [discriminator, status, id]);
 
@@ -75,51 +62,10 @@ export const Pin = ({ objectData }) => {
         position={[location.latitude, location.longitude]}
       >
         <Popup>
-          <>
-            <h3>Name: {name}</h3>
-            {status && (
-              <p>
-                <b>Status: </b> {status}
-              </p>
-            )}
-            {spots && (
-              <p>
-                <b>Free spots: </b> {freeSpots}/{spots}
-              </p>
-            )}
-            {/* display only few properties from single object api, based on lack of most ids */}
-            {fetchObjectData?.picture && (
-              <img
-                src={`https://android.jrotor.com/api/attachments/${fetchObjectData.picture.id}`}
-                alt="name"
-              />
-            )}
-            {fetchObjectData?.driverLicenceCategory && (
-              <p>
-                <b>Driving licens category: </b>
-                {fetchObjectData.driverLicenceCategory}
-              </p>
-            )}
-            {fetchObjectData?.batteryLevelPct ? (
-              <p>
-                <b>Battery: </b> {fetchObjectData.batteryLevelPct}%
-              </p>
-            ) : (
-              batteryLevelPct && (
-                <p>
-                  <b>Battery: </b> {batteryLevelPct}%
-                </p>
-              )
-            )}
-            {rangeKm && (
-              <p>
-                <b>Range: </b> {rangeKm}km
-              </p>
-            )}
-            {type && <p>Type: {type}</p>}
-            {platesNumber && <p>Plater: {platesNumber}</p>}
-            {sideNumber && <p>Number: {sideNumber}</p>}
-          </>
+          <PopupInfo
+            objectData={objectData}
+            fetchObjectData={fetchObjectData}
+          />
         </Popup>
       </Marker>
     </article>
